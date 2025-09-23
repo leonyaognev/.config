@@ -1,0 +1,91 @@
+* {
+	border-radius: 20;
+	border: none;
+	font-family: JetBrainsMono-Bold, Symbols Nerd Font;
+	font-weight: normal;
+	font-size: 13px;
+	padding: 0px 0px;
+	margin: 0px 5px;
+}
+
+/*@define-color background  #262a32;
+@define-color fg #d8dee8;
+@define-color gr #545d70;
+@define-color red #f7768e;
+@define-color green #b9f27c;
+@define-color blue #4b4e6f;
+@define-color cyan #0db9d7;*/
+@import url("/home/ognev/.cache/wal/colors-waybar.css");
+
+@define-color bg #1a1a1a;
+@define-color fg #f0f0f0;
+@define-color gr #808080;
+@define-color red #ff6b6b;
+@define-color green #a0ffa0;
+@define-color blue #6b6bff;
+@define-color cyan #00d7d7;
+
+window#waybar {
+	background-color: rgba(43, 48, 59, 0.0);
+	color: #ffffff;
+	transition-property: background-color;
+	transition-duration: .5s;
+}
+
+#workspaces button {
+	color: @color8;
+	background-color: @background ;
+	padding: 4px 0px;
+	margin: 0px 7px;
+}
+
+#workspaces button:hover {
+	color: @fg;
+}
+
+#workspaces button.active {
+	color: @fg;
+}
+
+#workspaces button.urgent {
+	color: @red;
+}
+
+
+#cpu,
+#memory,
+#window,
+#custom-media,
+#custom-cmus,
+#custom-weather,
+#tray,
+#language,
+#pulseaudio,
+#temperature,
+#battery,
+#backlight,
+#cava,
+
+#clock {
+	padding: 0 10px;
+	margin: 0 6px;
+	color: @fg;
+	background-color: @background ;
+}
+
+#custom-menu {
+	background-color: @background ;
+	color: @cyan;
+	padding: 0px 10px;
+	margin: 0px 10px;
+}
+
+#custom-sep {
+	color: rgba(0, 0, 0, 0.0);
+}
+
+#window {
+	background-color: @background ;
+	color: @cyan;
+	font-weight: bold;
+}

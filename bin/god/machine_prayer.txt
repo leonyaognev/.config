@@ -1,0 +1,6 @@
++-----------------------------+
+|  Bless this shell, oh Root |
+|  Guide my grep and awk     |
+|  Protect me from SIGKILL   |
+|  And deliver me from rm -rf|
++-----------------------------+

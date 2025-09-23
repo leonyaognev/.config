@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+# Пути
+MAKO_CONFIG="$HOME/.config/mako/config"
+WAL_COLORS="$HOME/.cache/wal/colors-mako"
+
+# Проверка, что pywal сгенерировал цвета
+if [ ! -f "$WAL_COLORS" ]; then
+    echo "Файл цветов pywal не найден. Сначала запусти 'wal -i /путь/картинка'."
+    exit 1
+fi
+
+# Читаем цвета из pywal
+BACKGROUND=$(grep "^background-color" "$WAL_COLORS" | cut -d '=' -f2)
+TEXT_COLOR=$(grep "^text-color" "$WAL_COLORS" | cut -d '=' -f2)
+BORDER_COLOR=$(grep "^border-color" "$WAL_COLORS" | cut -d '=' -f2)
+
+# Генерим конфиг mako
+cat > "$MAKO_CONFIG" <<EOF
+# Автогенерация конфигурации mako от pywal + твоих настроек
+
+# Шрифт
+font=JetBrainsMono Nerd Font Bold 11
+
+# Цвета
+background-color=$BACKGROUND
+text-color=$TEXT_COLOR
+border-color=$BORDER_COLOR
+
+# Скругления и тени
+border-radius=15
+layer=overlay
+
+# Размеры и отступы
+width=380
+height=110
+padding=15
+margin=30
+
+# Расположение
+anchor=top-right
+max-visible=5
+
+# Время жизни
+default-timeout=1000
+EOF
+
+echo "Конфиг mako сгенерирован: $MAKO_CONFIG"

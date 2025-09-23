@@ -1,0 +1,10 @@
+[input]
+method = pulse
+source = auto
+
+[output]
+method = ncurses
+data_format = ascii
+
+[general]
+sensitivity = 50

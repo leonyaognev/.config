@@ -1,0 +1,58 @@
+#!/bin/sh
+
+get_icon() {
+    case $1 in
+        01d) icon="" ;;   # ясно, день
+        01n) icon="" ;;   # ясно, ночь
+        02d) icon="🌤" ;;  # немного облаков, день
+        02n) icon="🌤" ;;  # немного облаков, ночь
+        03d | 03n) icon="☁️" ;;  # облачно
+        04d | 04n) icon="☁️" ;;  # пасмурно
+        09d | 09n) icon="🌧" ;;  # ливень
+        10d) icon="🌦" ;;  # дождь, день
+        10n) icon="🌧" ;;  # дождь, ночь
+        11d | 11n) icon="⛈" ;;  # гроза
+        13d | 13n) icon="❄️" ;;  # снег
+        50d | 50n) icon="🌫" ;;  # туман
+        *) icon="❓" ;;     # неизвестно
+    esac
+
+    echo "$icon"
+}
+
+KEY="e434b5435a979de6e155570590bee89b"
+CITY="Novosibirsk"
+UNITS="metric"
+SYMBOL="°"
+
+API="https://api.openweathermap.org/data/2.5"
+
+
+if [ -n "$CITY" ]; then
+    if [ "$CITY" -eq "$CITY" ] 2>/dev/null; then
+        CITY_PARAM="id=$CITY"
+    else
+        CITY_PARAM="q=$CITY"
+    fi
+
+    weather=$(curl -sf "$API/weather?appid=$KEY&$CITY_PARAM&units=$UNITS&lang=ru")
+else
+    location=$(curl -sf https://location.services.mozilla.com/v1/geolocate?key=geoclue)
+
+    if [ -n "$location" ]; then
+        location_lat="$(echo "$location" | jq '.location.lat')"
+        location_lon="$(echo "$location" | jq '.location.lng')"
+
+
+        weather=$(curl -sf "$API/weather?appid=$KEY&lat=$location_lat&lon=$location_lon&units=$UNITS&lang=ru")
+    fi
+fi
+
+if [ -n "$weather" ]; then
+    weather_temp=$(echo "$weather" | jq ".main.temp" | cut -d "." -f 1)
+    weather_icon=$(echo "$weather" | jq -r ".weather[0].icon")
+
+    icon=$(get_icon "$weather_icon")
+
+    echo "$icon $weather_temp$SYMBOL"
+fi
