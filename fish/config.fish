@@ -4,6 +4,13 @@
 #echo "🔮 May your $random_tool never segfault." | pv -qL 10 | lolcat
 
 # Create aliases
+alias gc="git commit"
+alias ga="git add"
+alias gp="git push"
+alias la="exa -lah"
+alias cat="bat"
+alias man="tldr"
+alias cd="z"
 alias g="git"
 alias n="nvim"
 alias m="micro"
@@ -42,3 +49,6 @@ set -x DEBUGINFOD_URLS https://debuginfod.archlinux.org/
 if status is-interactive
     # Commands to run in interactive sessions can go here
 end
+
+zoxide init fish | source
+pokemon-colorscripts -r
