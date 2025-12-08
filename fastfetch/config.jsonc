@@ -82,6 +82,15 @@
       "keyColor": "magenta"
     },
     {
+      "type": "disk",
+      "key": "  󰋊 Disk",
+      "keyColor": "cyan",
+      "paths": [
+        "/",
+        "/home"
+      ]
+    },
+    {
       "type": "custom",
       "format": "└──────────────────────────────────────────┘"
     },

@@ -6,7 +6,7 @@ super + Escape + r
 
 # Launch Terminal
 super + Return
-    alacritty
+    kitty
 
 # Hide or Unhide Polybar
 super + p
@@ -32,7 +32,7 @@ super + shift + {f,n,p,t,c,v,i,x,q,k,l,m}
 	{firefox, \
 	thunar, \
 	pavucontrol, \
-	telegram-desktop, \
+	materialgram, \
 	code, \
 	virtualbox, \
 	firefox --private-window, \

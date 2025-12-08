@@ -110,6 +110,15 @@ vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right win
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
+-- Toggle ranger in current working directory
+vim.keymap.set("n", "<leader>rc", function()
+	require("neoranger").toggleFloat()
+end, { desc = "Open ranger" })
+
+-- Toggle ranger in current file's directory
+vim.keymap.set("n", "<leader>rr", function()
+	require("neoranger").toggleFloat({ cwd = vim.fn.expand("%:p:h") })
+end, { desc = "Ranger in file dir" })
 -- [[ Basic Autocommands ]]
 
 -- Highlight when yanking (copying) text
@@ -139,6 +148,63 @@ vim.opt.rtp:prepend(lazypath)
 
 -- [[ Configure and install plugins ]]
 require("lazy").setup({
+	-- 	{
+	-- 		"nomad/nomad",
+	-- 		version = "*",
+	-- 		build = function()
+	-- 			---@type nomad.neovim.build
+	-- 			local build = require("nomad.neovim.build")
+	--
+	-- 			build.builders.download_prebuilt():build(build.contexts.lazy())
+	-- 		end,
+	-- 		opts = {},
+	-- 	},
+	-- {
+	-- 	"nomad/nomad",
+	-- 	version = "*",
+	-- 	build = function()
+	-- 		---@type nomad.neovim.build
+	-- 		local build = require("nomad.neovim.build")
+
+	-- 		build.builders.download_prebuilt():build(build.contexts.lazy())
+	-- 	end,
+	-- 	opts = {
+	-- 		collab = {
+	-- 			--server_address = "5.128.70.142:3000",
+	-- 			server_address = "192.168.68.61:3000",
+	-- 		},
+	-- 	},
+	-- },
+	{
+		"stianlyng/neoranger.nvim",
+		config = function()
+			require("neoranger").setup()
+		end,
+	},
+	-- 	{
+	-- 		"sphamba/smear-cursor.nvim",
+	-- 		opts = {
+	-- 			cursor_color = "#ff4000",
+	-- 			particles_enabled = true,
+	-- 			stiffness = 0.5,
+	-- 			trailing_stiffness = 0.2,
+	-- 			trailing_exponent = 5,
+	-- 			damping = 0.6,
+	-- 			gradient_exponent = 0,
+	-- 			gamma = 1,
+	-- 			never_draw_over_target = true, -- if you want to actually see under the cursor
+	-- 			hide_target_hack = true, -- same
+	-- 			particle_spread = 1,
+	-- 			particles_per_second = 500,
+	-- 			particles_per_length = 50,
+	-- 			particle_max_lifetime = 800,
+	-- 			particle_max_initial_velocity = 20,
+	-- 			particle_velocity_from_cursor = 0.5,
+	-- 			particle_damping = 0.15,
+	-- 			particle_gravity = -50,
+	-- 			min_distance_emit_particles = 0,
+	-- 		},
+	-- 	},
 	{
 		"ellisonleao/glow.nvim",
 		config = true,
@@ -150,7 +216,7 @@ require("lazy").setup({
 		run = ":TSUpdate",
 		config = function()
 			require("nvim-treesitter.configs").setup({
-				ensure_installed = { "cpp", "c", "python" },
+				ensure_installed = { "cpp", "c", "python", "svelte", "javascript", "typescript", "css", "html" },
 				highlight = { enable = true },
 				rainbow = { enable = true, extended_mode = true },
 			})

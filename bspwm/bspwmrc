@@ -56,5 +56,5 @@ pgrep -x redshift > /dev/null || redshift &
 
 # start compositor
 feh --randomize --no-fehbg --bg-fill ~/Images/
-picom --config $HOME/.config/bspwm/picom_configurations/3.conf &
+picom --config $HOME/.config/bspwm/picom_configurations/1.conf &
 exec polybar
