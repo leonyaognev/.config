@@ -1,0 +1,42 @@
+set window-title-basename "true"
+set selection-clipboard "clipboard"
+
+set notification-error-bg       "{{colors.error.dark.hex}}"
+set notification-error-fg       "{{colors.on_error.dark.hex}}"
+set notification-warning-bg     "{{colors.tertiary.dark.hex}}"
+set notification-warning-fg     "{{colors.secondary_container.dark.hex}}"
+set notification-bg             "{{colors.surface_container_lowest.dark.hex}}"
+set notification-fg             "{{colors.on_surface.dark.hex}}"
+
+set completion-bg               "{{colors.surface_container_lowest.dark.hex}}"
+set completion-fg               "{{colors.on_surface_variant.dark.hex}}"
+set completion-group-bg         "{{colors.surface_container_lowest.dark.hex}}"
+set completion-group-fg         "{{colors.on_surface_variant.dark.hex}}"
+set completion-highlight-bg     "{{colors.secondary_container.dark.hex}}"
+set completion-highlight-fg     "{{colors.on_surface.dark.hex}}"
+
+set index-bg                    "{{colors.surface_container_lowest.dark.hex}}"
+set index-fg                    "{{colors.on_surface.dark.hex}}"
+set index-active-bg             "{{colors.secondary_container.dark.hex}}"
+set index-active-fg             "{{colors.on_surface.dark.hex}}"
+
+set inputbar-bg                 "{{colors.surface_container_lowest.dark.hex}}"
+set inputbar-fg                 "{{colors.on_surface.dark.hex}}"
+set statusbar-bg                "{{colors.surface_container_lowest.dark.hex}}"
+set statusbar-fg                "{{colors.on_surface.dark.hex}}"
+
+set highlight-color             "{{colors.tertiary.dark.hex}}"
+set highlight-active-color      "{{colors.tertiary_container.dark.hex}}"
+
+set default-bg                  "{{colors.surface_container_lowest.dark.hex}}"
+set default-fg                  "{{colors.on_surface.dark.hex}}"
+
+set render-loading              true
+set render-loading-fg           "{{colors.surface_container_lowest.dark.hex}}"
+set render-loading-bg           "{{colors.on_surface.dark.hex}}"
+
+set recolor-lightcolor          "{{colors.surface_container_lowest.dark.hex}}"
+set recolor-darkcolor           "{{colors.on_surface.dark.hex}}"
+
+set adjust-open width
+set recolor true

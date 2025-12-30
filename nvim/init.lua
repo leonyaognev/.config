@@ -148,17 +148,28 @@ vim.opt.rtp:prepend(lazypath)
 
 -- [[ Configure and install plugins ]]
 require("lazy").setup({
-	-- 	{
-	-- 		"nomad/nomad",
-	-- 		version = "*",
-	-- 		build = function()
-	-- 			---@type nomad.neovim.build
-	-- 			local build = require("nomad.neovim.build")
-	--
-	-- 			build.builders.download_prebuilt():build(build.contexts.lazy())
-	-- 		end,
-	-- 		opts = {},
-	-- 	},
+	{
+		"nomad/nomad",
+		version = "*",
+		build = function()
+			---@type nomad.neovim.build
+			local build = require("nomad.neovim.build")
+
+			build.builders.download_prebuilt():build(build.contexts.lazy())
+		end,
+		opts = {},
+	},
+	{
+		"stevearc/oil.nvim",
+		---@module 'oil'
+		---@type oil.SetupOpts
+		opts = {},
+		-- Optional dependencies
+		dependencies = { { "nvim-mini/mini.icons", opts = {} } },
+		-- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+		-- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+		lazy = false,
+	},
 	-- {
 	-- 	"nomad/nomad",
 	-- 	version = "*",

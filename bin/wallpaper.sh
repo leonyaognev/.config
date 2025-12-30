@@ -34,7 +34,7 @@ matugen image ~/Images/paper/wallpaper.jpg
 swww img --transition-type any --transition-duration 0.5 --transition-fps 165 "$wall"
 wal -n -i "$wall"
 wal-telegram "$wall"
-~/bin/mako-colors
+# ~/bin/mako-colors
 
 killall swaync
 notify-send "Wallpaper successfully set"

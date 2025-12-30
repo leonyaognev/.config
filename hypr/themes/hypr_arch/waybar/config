@@ -12,7 +12,7 @@
 
   "cava": {
           // "cava_config": "$XDG_CONFIG_HOME/cava/cava.conf",
-          "framerate": 165,
+          "framerate": 120,
           "autosens": 1,
           "sensitivity": 2,
           "bars": 20,
@@ -109,7 +109,8 @@
  	"hyprland/language": {
  	    "format": "{}",
  	    "format-en": "EN",
- 	    "format-ru": "RU",
+ 	    "format-": "RU",
+      "on-click": "hyprctl switchxkblayout main next",
  	},
  
  

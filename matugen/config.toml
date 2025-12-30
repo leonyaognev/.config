@@ -24,3 +24,7 @@ output_path = '~/.config/swaync/themes/colors.css'
 [templates.quick_colors]
 input_path = "~/.config/matugen/templates/quick_colors.qml"
 output_path = "~/.config/quickshell/widgets/Colors.qml"
+
+[templates.zathura]
+input_path = "~/.config/matugen/templates/zatura"
+output_path = "~/.config/zathura/zathurarc"
