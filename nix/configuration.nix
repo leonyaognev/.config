@@ -162,4 +162,13 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
+  environment.variables.XCURSOR_SIZE = "32";
+
+  nix = {
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 8d";
+    };
+  };
 }
