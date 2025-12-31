@@ -27,13 +27,13 @@ echo "$wall" > "$cache_file"
 
 # копирование для разных штук
 cp "$wall" ~/Images/paper/wallpaper.jpg
-cp "$wall" ~/.mozilla/firefox/bgnqulea.default-release/chrome/wallpaper.jpg
+cp "$wall" ~/.mozilla/firefox/lpsgszuq.default/chrome/wallpaper.jpg
 
 # магия с обоями
 matugen image ~/Images/paper/wallpaper.jpg
 swww img --transition-type any --transition-duration 0.5 --transition-fps 165 "$wall"
 wal -n -i "$wall"
-wal-telegram "$wall"
+sh ~/bin/wal_telegram.sh "$wall"
 # ~/bin/mako-colors
 
 killall swaync
