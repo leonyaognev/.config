@@ -1,0 +1,4 @@
+#!/bin/bash
+LOGO=$(ls ~/bin/ascii/ascii* | shuf -n 1)
+
+fastfetch --logo "$LOGO"

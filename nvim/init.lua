@@ -171,20 +171,20 @@ require("lazy").setup({
 		lazy = false,
 	},
 	-- {
-	-- 	"nomad/nomad",
-	-- 	version = "*",
-	-- 	build = function()
-	-- 		---@type nomad.neovim.build
-	-- 		local build = require("nomad.neovim.build")
+	--   "nomad/nomad",
+	--   version = "*",
+	--   build = function()
+	--     ---@type nomad.neovim.build
+	--     local build = require("nomad.neovim.build")
 
-	-- 		build.builders.download_prebuilt():build(build.contexts.lazy())
-	-- 	end,
-	-- 	opts = {
-	-- 		collab = {
-	-- 			--server_address = "5.128.70.142:3000",
-	-- 			server_address = "192.168.68.61:3000",
-	-- 		},
-	-- 	},
+	--     build.builders.download_prebuilt():build(build.contexts.lazy())
+	--   end,
+	--   opts = {
+	--     collab = {
+	--       --server_address = "5.128.70.142:3000",
+	--       server_address = "192.168.68.61:3000",
+	--     },
+	--   },
 	-- },
 	{
 		"stianlyng/neoranger.nvim",
@@ -192,30 +192,30 @@ require("lazy").setup({
 			require("neoranger").setup()
 		end,
 	},
-	-- 	{
-	-- 		"sphamba/smear-cursor.nvim",
-	-- 		opts = {
-	-- 			cursor_color = "#ff4000",
-	-- 			particles_enabled = true,
-	-- 			stiffness = 0.5,
-	-- 			trailing_stiffness = 0.2,
-	-- 			trailing_exponent = 5,
-	-- 			damping = 0.6,
-	-- 			gradient_exponent = 0,
-	-- 			gamma = 1,
-	-- 			never_draw_over_target = true, -- if you want to actually see under the cursor
-	-- 			hide_target_hack = true, -- same
-	-- 			particle_spread = 1,
-	-- 			particles_per_second = 500,
-	-- 			particles_per_length = 50,
-	-- 			particle_max_lifetime = 800,
-	-- 			particle_max_initial_velocity = 20,
-	-- 			particle_velocity_from_cursor = 0.5,
-	-- 			particle_damping = 0.15,
-	-- 			particle_gravity = -50,
-	-- 			min_distance_emit_particles = 0,
-	-- 		},
-	-- 	},
+	--   {
+	--     "sphamba/smear-cursor.nvim",
+	--     opts = {
+	--       cursor_color = "#ff4000",
+	--       particles_enabled = true,
+	--       stiffness = 0.5,
+	--       trailing_stiffness = 0.2,
+	--       trailing_exponent = 5,
+	--       damping = 0.6,
+	--       gradient_exponent = 0,
+	--       gamma = 1,
+	--       never_draw_over_target = true, -- if you want to actually see under the cursor
+	--       hide_target_hack = true, -- same
+	--       particle_spread = 1,
+	--       particles_per_second = 500,
+	--       particles_per_length = 50,
+	--       particle_max_lifetime = 800,
+	--       particle_max_initial_velocity = 20,
+	--       particle_velocity_from_cursor = 0.5,
+	--       particle_damping = 0.15,
+	--       particle_gravity = -50,
+	--       min_distance_emit_particles = 0,
+	--     },
+	--   },
 	{
 		"ellisonleao/glow.nvim",
 		config = true,
@@ -692,6 +692,7 @@ require("lazy").setup({
 				c = { "clang-format" },
 				cpp = { "clang-format" },
 				python = { "isort", "black" },
+				sql = { "pg_format" },
 				-- Conform can also run multiple formatters sequentially
 				-- python = { "isort", "black" },
 				--

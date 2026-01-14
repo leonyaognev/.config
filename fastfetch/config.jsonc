@@ -1,8 +1,7 @@
 {
   "logo": {
-    //"source": "$(find \"${XDG_CONFIG_HOME:-$HOME/.config}/fastfetch/pngs/\" -name \"*.png\" | sort -R | head -1)",
-    "source": "~/.config/fastfetch/pngs/fastfetch2.jpg",
-    "height": 18
+    "source": "~/ascii3"
+    //"height": 18
   },
   "display": {
     "separator": " : "

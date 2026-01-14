@@ -1,7 +1,7 @@
 # import = ["/home/user/.config/alacritty/themes/custom.toml"]
 
 [general]
-import = ["~/.cache/wal/colors-alacritty.toml"]
+import = ["~/.cache/cwal/colors-alacritty.toml"]
 
 [colors]
 draw_bold_text_with_bright_colors = true

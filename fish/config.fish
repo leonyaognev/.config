@@ -13,6 +13,7 @@ set -x DEBUGINFOD_URLS https://debuginfod.archlinux.org/
 
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.config/bin:$PATH"
 
 
 if status is-interactive
@@ -22,8 +23,6 @@ if status is-interactive
     alias ga="git add"
     alias gp="git push"
     alias la="exa -lah"
-    alias cat="bat"
-    #   alias man="tldr"
     alias cd="z"
     alias g="git"
     alias n="nvim"
@@ -33,7 +32,7 @@ if status is-interactive
     alias c="clear"
     alias prayer="cat ~/bin/god/machine_prayer.txt | pv -qL 20 | lolcat"
     alias cpd="java -cp (string join : ~/tools/pmd-bin-6.55.0/lib/*) net.sourceforge.pmd.cpd.CPD --language c"
-    alias wallpaper="mpvpaper -vs -o \"--volume=30 loop --no-keepaspect --video-unscaled=yes\" -f eDP-1"
+    # alias wallpaper="mpvpaper -vs -o \"--volume=30 loop --no-keepaspect --video-unscaled=yes\" -f eDP-1"
 
     alias ut="tar -xvzf"
     alias t="tar -czf"
