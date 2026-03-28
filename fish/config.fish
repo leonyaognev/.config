@@ -32,7 +32,7 @@ if status is-interactive
     alias c="clear"
     alias prayer="cat ~/bin/god/machine_prayer.txt | pv -qL 20 | lolcat"
     alias cpd="java -cp (string join : ~/tools/pmd-bin-6.55.0/lib/*) net.sourceforge.pmd.cpd.CPD --language c"
-    # alias wallpaper="mpvpaper -vs -o \"--volume=30 loop --no-keepaspect --video-unscaled=yes\" -f eDP-1"
+    alias wallpaper_engine ="mpvpaper -vs -o \"--volume=30 loop --no-keepaspect --video-unscaled=yes\" -f eDP-1"
 
     alias ut="tar -xvzf"
     alias t="tar -czf"

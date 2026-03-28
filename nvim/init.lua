@@ -693,6 +693,11 @@ require("lazy").setup({
 				cpp = { "clang-format" },
 				python = { "isort", "black" },
 				sql = { "pg_format" },
+				markdown = { "prettier" },
+				javascript = { "eslint_d" },
+				javascriptreact = { "eslint_d" },
+				typescript = { "eslint_d" },
+				typescriptreact = { "eslint_d" },
 				-- Conform can also run multiple formatters sequentially
 				-- python = { "isort", "black" },
 				--
@@ -817,3 +822,11 @@ require("lazy").setup({
 	},
 })
 vim.diagnostic.config({ virtual_text = true })
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "markdown",
+	callback = function(args)
+		vim.diagnostic.disable(args.buf)
+	end,
+})
+vim.foldmethod = manual

@@ -2,7 +2,7 @@
 import QtQuick
 
 QtObject {
-    property string primaryColor: "#bac3ff"
-    property string accentColor: "#0a154b"
-    property string mutedColor: "#121318"
+    property string primaryColor: "#e9c16c"
+    property string accentColor: "#261a00"
+    property string mutedColor: "#17130b"
 }
