@@ -1,3 +1,8 @@
+vim.api.nvim_set_hl(0, "CmpNormal", { bg = "NONE", fg = "#ebdbb2" })
+vim.api.nvim_set_hl(0, "CmpBorder", { fg = "#a89984" })
+vim.api.nvim_set_hl(0, "CmpSel", { bg = "#3c3836", fg = "#ebdbb2" })
+vim.api.nvim_set_hl(0, "CmpGhostText", { fg = "#a89984", italic = true })
+
 return {
 	{
 		"hrsh7th/nvim-cmp",
@@ -20,6 +25,17 @@ return {
 			local cmp = require("cmp")
 			local luasnip = require("luasnip")
 			luasnip.config.setup({})
+
+			local border = {
+				{ "╭", "CmpBorder" },
+				{ "─", "CmpBorder" },
+				{ "╮", "CmpBorder" },
+				{ "│", "CmpBorder" },
+				{ "╯", "CmpBorder" },
+				{ "─", "CmpBorder" },
+				{ "╰", "CmpBorder" },
+				{ "│", "CmpBorder" },
+			}
 
 			cmp.setup({
 				snippet = {
@@ -53,6 +69,64 @@ return {
 					{ name = "nvim_lsp" },
 					{ name = "luasnip" },
 					{ name = "path" },
+				},
+				window = {
+					completion = {
+						border = border,
+						winhighlight = "Normal:CmpNormal,FloatBorder:CmpBorder,CursorLine:CmpSel,Search:None",
+						col_offset = -3,
+						side_padding = 1,
+					},
+					documentation = {
+						border = border,
+						winhighlight = "Normal:CmpNormal,FloatBorder:CmpBorder",
+					},
+				},
+				formatting = {
+					fields = { "kind", "abbr", "menu" },
+					kind_icons = {
+						Text = "󰉿",
+						Method = "󰆧",
+						Function = "󰊕",
+						Constructor = "",
+						Field = "󰜢",
+						Variable = "󰀫",
+						Class = "󰠱",
+						Interface = "",
+						Module = "󰏓",
+						Property = "󰜢",
+						Unit = "󰑭",
+						Value = "󰎠",
+						Enum = "",
+						Keyword = "󰌋",
+						Snippet = "",
+						Color = "󰏘",
+						File = "󰈙",
+						Reference = "󰈇",
+						Folder = "󰉋",
+						EnumMember = "",
+						Constant = "󰏿",
+						Struct = "󰙅",
+						Event = "",
+						Operator = "󰆕",
+						TypeParameter = "",
+					},
+					format = function(entry, vim_item)
+						local kind_icons = require("cmp").config.window.getkind_icons
+								and require("cmp").config.window.getkind_icons()
+							or {}
+						local kind = vim_item.kind
+						if kind_icons[kind] then
+							vim_item.kind = kind_icons[kind]
+						end
+						vim_item.menu = ({
+							nvim_lsp = "LSP",
+							luasnip = "Snip",
+							path = "Path",
+							lazydev = "Dev",
+						})[entry.source.name]
+						return vim_item
+					end,
 				},
 			})
 		end,
