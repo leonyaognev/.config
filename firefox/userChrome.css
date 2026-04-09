@@ -1,0 +1,652 @@
+/* ===================================================================
+   LATIN ACCENT - FIREFOX DARK & TRANSPARENT THEME
+   Made with cariño by Acercandr0
+   =================================================================== */
+
+:root {
+  /* 🎯 Core Transparency */
+  --tabpanel-background-color: transparent !important;
+  --chrome-content-separator-color: transparent !important;
+  --toolbar-bgcolor: transparent !important;
+  
+  /* 🌈 Dynamic Color System */
+  --accent-color: color-mix(in srgb, AccentColor 100%, transparent) !important;
+  --accent-color-subtle: color-mix(in srgb, AccentColor 30%, transparent) !important;
+  
+  /* 👻 Opacity System */
+  --inactive-opacity: 0.3 !important;
+  --hover-opacity: 1 !important;
+  --semi-opacity: 0.7 !important;
+  
+  /* ⚡ Animation System */
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  --transition-bounce: all 0.45s cubic-bezier(0.65, -0.50, 0.260, 1.50) !important;
+  --transition-quick: all 0.15s ease-out !important;
+  
+  /* 📐 Layout Constants */
+  --border-radius: 5px;
+  --border-radius-large: 7px;
+  
+  /* 🎨 Interface Colors */
+  --panel-bg: rgba(43, 43, 43, 0.98) !important;
+  --panel-border: var(--accent-color) !important;
+  --panel-text: white !important;
+  --hover-bg: rgba(255, 255, 255, 0.08) !important;
+  
+  /* 🔍 Focus System */
+  --focus-outline-color: var(--accent-color) !important;
+  --focus-outline-width: 1px !important;
+  --toolbarbutton-icon-fill-attention: var(--accent-color) !important;
+  
+  /* 📋 Dropdown Styling */
+  --arrowpanel-background: var(--panel-bg) !important;
+  --arrowpanel-border-color: var(--panel-border) !important;
+  --arrowpanel-color: var(--panel-text) !important;
+  --urlbar-open-background: var(--panel-bg) !important;
+  --urlbar-open-color: var(--panel-text) !important;
+  
+  /* 🚫 Button Background Override */
+  --toolbarbutton-hover-background: transparent !important;
+  --toolbarbutton-active-background: transparent !important;
+}
+
+/* ===========================
+   🧹 GLOBAL RESETS
+   =========================== */
+*,
+#content,
+#content > *,
+#main-window,
+#browser,
+#appcontent,
+#browserContainer,
+#tabbrowser-tabpanels,
+#tabbrowser-tabbox,
+#tabbrowser-arrowscrollbox,
+.tabbrowser-tabs,
+.webRenderCompositor,
+.browserContainer,
+.browserStack,
+#webrtcIndicator,
+#navigator-toolbox,
+#TabsToolbar,
+#PersonalToolbar {
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* ===========================
+   📑 TAB SYSTEM
+   =========================== */
+
+#navigator-toolbox,
+#TabsToolbar,
+#nav-bar {
+  border: none !important;
+}
+
+/* Tab Layout */
+.titlebar-spacer[type="pre-tabs"] {
+  width: 1px !important;
+}
+
+.titlebar-spacer[type="post-tabs"] {
+  width: 40px !important;
+}
+
+/* Base Tab Styling */
+.tabbrowser-tab {
+  transition: var(--transition-smooth) !important;
+  position: relative;
+}
+
+/* Active Tab */
+.tabbrowser-tab[selected="true"] .tab-background {
+  border: 1px solid var(--accent-color) !important;
+  background: transparent !important;
+  border-radius: var(--border-radius) !important;
+  animation: tabActivate 0.3s ease-out;
+}
+
+/* Inactive Tabs */
+.tabbrowser-tab:not([selected]) .tab-icon-image,
+.tabbrowser-tab:not([selected]) .tab-label,
+#tabs-newtab-button {
+  opacity: var(--inactive-opacity) !important;
+  transition: var(--transition-smooth) !important;
+}
+
+/* Tab Hover Effects */
+.tabbrowser-tab:hover .tab-text,
+.tabbrowser-tab:hover .tab-icon-image,
+#tabs-newtab-button:hover {
+  opacity: var(--hover-opacity) !important;
+}
+
+/* Tab Close Button */
+.tabbrowser-tab .tab-close-button {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: scale(0.8) rotate(30deg) !important;
+  transition: var(--transition-bounce) !important;
+}
+
+.tabbrowser-tab:hover .tab-close-button {
+  opacity: var(--semi-opacity) !important;
+  visibility: visible !important;
+  transform: scale(1) rotate(0deg) !important;
+}
+
+.tabbrowser-tab .tab-close-button:hover {
+  opacity: var(--hover-opacity) !important;
+  transform: scale(1.1) !important;
+}
+
+/* ===========================
+   🔍 URL BAR SYSTEM
+   =========================== */
+
+/* Closed State */
+#urlbar[breakout] > #urlbar-background,
+#urlbar-results,
+#urlbar-results .urlbarView,
+#urlbar-results .urlbarView-body,
+#urlbar-results .urlbarView-row {
+  background: transparent !important;
+}
+
+/* Open State */
+#urlbar[open] > #urlbar-background {
+  background: var(--urlbar-open-background) !important;
+  color: var(--urlbar-open-color) !important;
+  border: 1px solid var(--accent-color) !important;
+  border-radius: var(--border-radius-large) !important;
+  margin: 1px !important;
+  animation: urlbarExpand 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Search Results */
+#urlbar[open] #urlbar-results,
+#urlbar[open] #urlbar-results .urlbarView,
+#urlbar[open] #urlbar-results .urlbarView-body {
+  background: transparent !important;
+}
+
+#urlbar-results .urlbarView-row {
+  transition: var(--transition-quick) !important;
+  border-radius: var(--border-radius) !important;
+}
+
+#urlbar-results .urlbarView-row:hover {
+  background: var(--hover-bg) !important;
+  transform: translateX(4px);
+}
+
+#urlbar-searchmode-switcher {
+  background-color: transparent !important;
+}
+
+/* URL Input Styling */
+.urlbar-input-box {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.urlbar-input {
+  text-align: center !important;
+  transition: var(--transition-smooth) !important;
+}
+
+#urlbar[focused] .urlbar-input {
+  transform: scale(1.02);
+}
+
+/* ===========================
+   📚 BOOKMARKS BAR FIX
+   =========================== */
+
+/* Personal Toolbar (Bookmarks Bar) */
+#PersonalToolbar {
+  background: transparent !important;
+  border: none !important;
+  padding: 2px 5px !important;
+}
+
+/* Bookmark Items Container */
+#PlacesToolbarItems {
+  display: flex !important;
+  align-items: center !important;
+  gap: 2px !important;
+}
+
+/* Individual Bookmark Items */
+.bookmark-item {
+  background: transparent !important;
+  border: none !important;
+  border-radius: var(--border-radius) !important;
+  opacity: var(--inactive-opacity) !important;
+  transition: var(--transition-smooth) !important;
+  padding: 4px 8px !important;
+  margin: 0 1px !important;
+  min-height: 24px !important;
+  max-height: 24px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  /* Prevent size changes */
+  transform-origin: center !important;
+  flex-shrink: 0 !important;
+}
+
+/* Bookmark Icons */
+.bookmark-item .toolbarbutton-icon {
+  width: 16px !important;
+  height: 16px !important;
+  margin-right: 4px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Bookmark Text */
+.bookmark-item .toolbarbutton-text {
+  font-size: 12px !important;
+  max-width: 120px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* Bookmark Hover - Only opacity and subtle effects */
+.bookmark-item:hover {
+  opacity: var(--hover-opacity) !important;
+  background: var(--hover-bg) !important;
+  /* Remove scaling to prevent size issues */
+  transform: none !important;
+}
+
+/* Bookmark Icon Color on Hover */
+.bookmark-item:hover .toolbarbutton-icon {
+  fill: var(--accent-color) !important;
+}
+
+/* Bookmarks Chevron Button */
+#PlacesChevron {
+  background: transparent !important;
+  border: none !important;
+  opacity: var(--inactive-opacity) !important;
+  transition: var(--transition-smooth) !important;
+  min-width: 20px !important;
+  max-width: 20px !important;
+  margin-left: 5px !important;
+}
+
+#PlacesChevron:hover {
+  opacity: var(--hover-opacity) !important;
+  background: var(--hover-bg) !important;
+  transform: none !important;
+}
+
+/* ===========================
+   🎛️ UNIVERSAL BUTTON SYSTEM
+   =========================== */
+
+/* 🔧 COMPREHENSIVE BUTTON SELECTOR */
+toolbarbutton:not(.bookmark-item),
+.toolbarbutton-1:not(.bookmark-item),
+#urlbar-container toolbarbutton,
+#urlbar toolbarbutton,
+#identity-permission-box,
+#identity-icon-box,
+#tracking-protection-icon-container,
+#star-button-box,
+#picture-in-picture-button,
+#reader-mode-button,
+#pageAction-urlbar-_testpilot-containers,
+#pageAction-panel-bookmark,
+#pageAction-panel-copyURL,
+#pageAction-panel-emailLink,
+#pageAction-panel-pinTab,
+#pageAction-panel-sendToDevice,
+#page-action-buttons > toolbarbutton,
+.urlbar-page-action,
+.expanded-button,
+.button,
+moz-button:not(.tools-overflow),
+#nav-bar toolbarbutton:not(.bookmark-item),
+#nav-bar-customization-target > toolbarbutton:not(.bookmark-item),
+#back-button,
+#forward-button,
+#reload-button,
+#stop-button,
+#home-button,
+#library-button,
+#fxa-toolbar-menu-button,
+#unified-extensions-button,
+#downloads-button,
+#bookmarks-menu-button,
+#history-panelmenu,
+#appMenu-button,
+#PanelUI-menu-button,
+#sidebar-switcher-target toolbarbutton,
+#sidebar-box .sidebar-placesTree toolbarbutton,
+.sidebar-placesTreechildren toolbarbutton,
+#sidebar-header .sidebar-close-button,
+#sidebar-header toolbarbutton,
+.sidebar-panel toolbarbutton,
+#sidebar toolbarbutton,
+#context-navigation toolbarbutton,
+#context-sep-navigation + toolbarbutton,
+.unified-extensions-item-action-button,
+.panel-subview-footer-button,
+toolbarpaletteitem > toolbarbutton,
+.chromeclass-toolbar-additional toolbarbutton,
+#addon-bar toolbarbutton,
+.tabs-newtab-button,
+#new-tab-button,
+.tab-close-button,
+.close-button,
+#fullscreen-button,
+#minimize-button,
+#restore-button,
+#close-button,
+.button-background {
+  background: transparent !important;
+  opacity: var(--inactive-opacity) !important;
+  transition: var(--transition-smooth) !important;
+  border-radius: var(--border-radius) !important;
+  position: relative;
+  overflow: hidden;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* 🚫 FORCE NO BACKGROUNDS */
+#navigator-toolbox toolbarbutton:not(.bookmark-item),
+#navigator-toolbox .toolbarbutton-1:not(.bookmark-item),
+#nav-bar > * > toolbarbutton:not(.bookmark-item),
+#nav-bar > toolbarbutton:not(.bookmark-item),
+#nav-bar toolbarbutton:not(.bookmark-item),
+#nav-bar .toolbarbutton-1:not(.bookmark-item),
+#back-button,
+#forward-button,
+#reload-button,
+#stop-button,
+#home-button,
+#library-button,
+#fxa-toolbar-menu-button,
+#unified-extensions-button,
+#downloads-button,
+#bookmarks-menu-button,
+#history-panelmenu,
+#appMenu-button,
+#PanelUI-menu-button,
+#sidebar-switcher-target toolbarbutton,
+.toolbarbutton-1:not(.bookmark-item),
+.button-background {
+  background-color: transparent !important;
+  background-image: none !important;
+  background: transparent !important;
+}
+
+#navigator-toolbox toolbarbutton:not(.bookmark-item):hover,
+#navigator-toolbox .toolbarbutton-1:not(.bookmark-item):hover,
+#nav-bar > * > toolbarbutton:not(.bookmark-item):hover,
+#nav-bar > toolbarbutton:not(.bookmark-item):hover,
+#nav-bar toolbarbutton:not(.bookmark-item):hover,
+#nav-bar .toolbarbutton-1:not(.bookmark-item):hover,
+#back-button:hover,
+#forward-button:hover,
+#reload-button:hover,
+#stop-button:hover,
+#home-button:hover,
+#library-button:hover,
+#fxa-toolbar-menu-button:hover,
+#unified-extensions-button:hover,
+#downloads-button:hover,
+#bookmarks-menu-button:hover,
+#history-panelmenu:hover,
+#appMenu-button:hover,
+#PanelUI-menu-button:hover,
+#sidebar-switcher-target toolbarbutton:hover,
+.toolbarbutton-1:not(.bookmark-item):hover,
+.toolbarbutton-1:not(.bookmark-item):hover:active,
+.button-background:hover {
+  background-color: transparent !important;
+  background-image: none !important;
+  background: transparent !important;
+}
+
+/* 🎯 HOVER EFFECTS */
+toolbarbutton:not(.bookmark-item):hover,
+.toolbarbutton-1:not(.bookmark-item):hover,
+#urlbar-container toolbarbutton:hover,
+#urlbar toolbarbutton:hover,
+#identity-permission-box:hover,
+#identity-icon-box:hover,
+#tracking-protection-icon-container:hover,
+#star-button-box:hover,
+#picture-in-picture-button:hover,
+#reader-mode-button:hover,
+#pageAction-urlbar-_testpilot-containers:hover,
+#pageAction-panel-bookmark:hover,
+#pageAction-panel-copyURL:hover,
+#pageAction-panel-emailLink:hover,
+#pageAction-panel-pinTab:hover,
+#pageAction-panel-sendToDevice:hover,
+#page-action-buttons > toolbarbutton:hover,
+.urlbar-page-action:hover,
+.expanded-button:hover,
+.button:hover,
+moz-button:not(.tools-overflow):hover,
+#nav-bar toolbarbutton:not(.bookmark-item):hover,
+#nav-bar-customization-target > toolbarbutton:not(.bookmark-item):hover,
+#back-button:hover,
+#forward-button:hover,
+#reload-button:hover,
+#stop-button:hover,
+#home-button:hover,
+#library-button:hover,
+#fxa-toolbar-menu-button:hover,
+#unified-extensions-button:hover,
+#downloads-button:hover,
+#bookmarks-menu-button:hover,
+#history-panelmenu:hover,
+#appMenu-button:hover,
+#PanelUI-menu-button:hover,
+#sidebar-switcher-target toolbarbutton:hover,
+#sidebar-box .sidebar-placesTree toolbarbutton:hover,
+.sidebar-placesTreechildren toolbarbutton:hover,
+#sidebar-header .sidebar-close-button:hover,
+#sidebar-header toolbarbutton:hover,
+.sidebar-panel toolbarbutton:hover,
+#sidebar toolbarbutton:hover,
+#context-navigation toolbarbutton:hover,
+#context-sep-navigation + toolbarbutton:hover,
+.unified-extensions-item-action-button:hover,
+.panel-subview-footer-button:hover,
+toolbarpaletteitem > toolbarbutton:hover,
+.chromeclass-toolbar-additional toolbarbutton:hover,
+#addon-bar toolbarbutton:hover,
+.tabs-newtab-button:hover,
+#new-tab-button:hover,
+.tab-close-button:hover,
+.close-button:hover,
+#fullscreen-button:hover,
+#minimize-button:hover,
+#restore-button:hover,
+#close-button:hover,
+.button-background:hover {
+  opacity: var(--hover-opacity) !important;
+  transform: scale(1.05) !important;
+}
+
+/* 🎨 ICON COLOR CHANGE ON HOVER */
+toolbarbutton:not(.bookmark-item):hover image,
+.toolbarbutton-1:not(.bookmark-item):hover image,
+#nav-bar toolbarbutton:not(.bookmark-item):hover image,
+#urlbar toolbarbutton:hover image,
+#urlbar #identity-icon-box:hover image,
+#urlbar #identity-permission-box:hover image,
+#urlbar #tracking-protection-icon-container:hover image,
+#urlbar #star-button-box:hover image,
+#urlbar #picture-in-picture-button:hover image,
+#urlbar #reader-mode-button:hover image,
+.urlbar-page-action:hover image,
+#sidebar toolbarbutton:hover image,
+toolbarpaletteitem > toolbarbutton:hover image,
+.panel-subview-footer-button:hover image {
+  fill: var(--accent-color) !important;
+  filter: none !important;
+}
+
+.button-background:hover {
+  & img {
+    fill: var(--accent-color) !important;
+  }
+}
+
+/* 🌟 SPECIAL STATES */
+toolbarbutton[checked="true"]:not(.bookmark-item),
+toolbarbutton[open="true"]:not(.bookmark-item),
+.toolbarbutton-1[checked="true"]:not(.bookmark-item),
+.toolbarbutton-1[open="true"]:not(.bookmark-item),
+#downloads-button[attention="true"],
+#library-button[attention="true"] {
+  opacity: var(--hover-opacity) !important;
+  background: var(--accent-color-subtle) !important;
+}
+
+/* ===========================
+   🎭 ELEMENT VISIBILITY
+   =========================== */
+
+#identity-icon-box label {
+  display: none !important;
+}
+
+#sidebar-tools-and-extensions-splitter {
+  display: none !important;
+}
+
+#forward-button[disabled="true"] {
+  display: none !important;
+}
+
+/* ===========================
+   🎮 WINDOW CONTROLS
+   =========================== */
+
+/* Normal Window */
+#main-window:not([tabsintitlebar]) .titlebar-buttonbox toolbarbutton,
+#main-window[tabsintitlebar]:not([sizemode="maximized"]) .titlebar-buttonbox toolbarbutton {
+  opacity: var(--semi-opacity) !important;
+  transform: scale(0.9) !important;
+  transition: var(--transition-smooth) !important;
+  fill: currentColor !important;
+  color: inherit !important;
+}
+
+/* Hover - Normal Window */
+#main-window:not([tabsintitlebar]) .titlebar-buttonbox toolbarbutton:hover,
+#main-window[tabsintitlebar]:not([sizemode="maximized"]) .titlebar-buttonbox toolbarbutton:hover {
+  opacity: var(--hover-opacity) !important;
+  transform: scale(1.1) !important;
+  color: var(--accent-color) !important;
+}
+
+/* Maximized Window */
+#main-window[tabsintitlebar][sizemode="maximized"] .titlebar-buttonbox toolbarbutton,
+.titlebar-buttonbox toolbarbutton {
+  opacity: var(--hover-opacity) !important;
+  transform: scale(0.9) !important;
+  transition: var(--transition-smooth) !important;
+  fill: currentColor !important;
+  color: inherit !important;
+}
+
+/* Hover - Maximized Window */
+.titlebar-buttonbox toolbarbutton:hover {
+  transform: scale(1.1) !important;
+  color: var(--accent-color) !important;
+}
+
+/* ===========================
+   ✨ ANIMATIONS & KEYFRAMES
+   =========================== */
+
+/* URL Bar Expand Animation */
+@keyframes urlbarExpand {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(-5px);
+  }
+  70% {
+    transform: scale(1.02) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Tab Activation Animation */
+@keyframes tabActivate {
+  0% {
+    transform: scale(0.98);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Dropdown Slide Animation */
+#urlbar-results {
+  animation: slideDown 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-15px) scale(0.95);
+  }
+  60% {
+    transform: translateY(2px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Loading Indicator */
+.tab-throbber {
+  transition: var(--transition-smooth) !important;
+}
+
+.tab-throbber[busy] {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* Button Press Animation */
+@keyframes buttonPress {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1.05); }
+}
+
+toolbarbutton:not(.bookmark-item):active,
+.toolbarbutton-1:not(.bookmark-item):active {
+  animation: buttonPress 0.15s ease-out !important;
+}

@@ -16,6 +16,7 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 		},
 		config = function()
+			-- LSP attach keymaps
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
 				callback = function(event)
@@ -53,19 +54,43 @@ return {
 				end,
 			})
 
+			-- Общие capabilities
 			local capabilities = vim.tbl_deep_extend(
 				"force",
 				vim.lsp.protocol.make_client_capabilities(),
 				require("cmp_nvim_lsp").default_capabilities()
 			)
 
+			-- LSP сервера
 			local servers = {
 				lua_ls = { settings = { Lua = { completion = { callSnippet = "Replace" } } } },
+
+				-- TypeScript с Vue plugin
+				ts_ls = {
+					filetypes = { "typescript", "javascript", "typescriptreact", "javascriptreact", "vue" },
+					init_options = {
+						plugins = {
+							{
+								name = "@vue/typescript-plugin",
+								location = vim.fn.stdpath("data")
+									.. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+								languages = { "vue" },
+							},
+						},
+					},
+				},
+
+				-- Vue сервер (template + CSS)
+				vue_ls = {},
 			}
 
+			-- Mason + установка тулзов
 			require("mason").setup()
 			local ensure_installed = vim.tbl_keys(servers or {})
-			vim.list_extend(ensure_installed, { "stylua" })
+			vim.list_extend(
+				ensure_installed,
+				{ "stylua", "vue-language-server", "typescript-language-server", "vtsls" }
+			)
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
 			require("mason-lspconfig").setup({
@@ -76,6 +101,32 @@ return {
 						require("lspconfig")[server_name].setup(server)
 					end,
 				},
+			})
+
+			-- Автозапуск ts_ls на vue файлах
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = "vue",
+				callback = function(args)
+					local root_dir = vim.fs.root(args.buf, { "package.json", "tsconfig.json", "jsconfig.json" })
+					local init_options = {
+						plugins = {
+							{
+								name = "@vue/typescript-plugin",
+								location = vim.fn.stdpath("data")
+									.. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+								languages = { "vue" },
+							},
+						},
+					}
+
+					vim.lsp.start({
+						name = "ts_ls",
+						cmd = { "typescript-language-server", "--stdio" },
+						root_dir = root_dir,
+						init_options = init_options,
+						capabilities = capabilities,
+					})
+				end,
 			})
 		end,
 	},

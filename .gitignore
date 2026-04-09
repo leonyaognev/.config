@@ -39,5 +39,7 @@
 !tmux/**
 !quickshell/
 !quickshell/**
+!firefox/
+!firefox/**
 !README.md
 !.gitignore
