@@ -12,7 +12,7 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
 		config = function()
-			require("nvim-treesitter.configs").setup({
+			require("nvim-treesitter").setup({
 				ensure_installed = { "cpp", "c", "python", "svelte", "javascript", "typescript", "css", "html" },
 				highlight = { enable = true },
 				rainbow = { enable = true, extended_mode = true },
@@ -152,7 +152,7 @@ return {
 		end,
 	},
 	{
-		"norcalli/nvim-colorizer.lua",
+		"catgoose/nvim-colorizer.lua",
 		config = function()
 			require("colorizer").setup(
 				{ "*" }, -- все файлы

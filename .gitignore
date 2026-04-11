@@ -42,4 +42,6 @@
 !firefox/
 !firefox/**
 !README.md
+!yazi/
+!yazi/**
 !.gitignore

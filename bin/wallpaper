@@ -33,7 +33,7 @@ cp "$wall" ~/.mozilla/firefox/bgnqulea.default-release/chrome/wallpaper.jpg
 matugen image ~/Images/paper/wallpaper.jpg
 awww img --transition-type any --transition-duration 0.5 --transition-fps 165 "$wall"
 cwal --img "$wall"
-~/bin/wal_telegram --background="$wall"
+~/bin/wal_telegram --background "$wall"
 
 killall swaync
 notify-send "Wallpaper successfully set"
