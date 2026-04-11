@@ -151,7 +151,7 @@
  	"custom/weather": {
  	"format": "{}",
  	"interval": 600,
- 	"exec": "~/.config/hypr/themes/hypr_arch/scripts/weather.sh",
+ 	"exec": "~/bin/weather",
  	"tooltip": false
  	},
 
