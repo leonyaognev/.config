@@ -17,6 +17,9 @@
 !fish/**
 !hypr/
 !hypr/**
+!hyprland.conf
+!waybar/
+!waybar/**
 !kitty/
 !kitty/**
 !matugen/
