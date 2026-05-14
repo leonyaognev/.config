@@ -28,6 +28,8 @@
 !neofetch/**
 !nvim/
 !nvim/**
+!niri/
+!niri/**
 !polybar/
 !polybar/**
 !ranger/

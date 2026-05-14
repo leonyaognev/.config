@@ -160,7 +160,7 @@ return {
 				markdown = { "prettier" },
 				javascript = { "eslint_d" },
 				javascriptreact = { "eslint_d" },
-				typescript = { "eslint_d" },
+				typescript = { "prettier" },
 				typescriptreact = { "eslint_d" },
 				vue = { "prettier" },
 			},

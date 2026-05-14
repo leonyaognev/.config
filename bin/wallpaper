@@ -30,11 +30,10 @@ cp "$wall" ~/Images/paper/wallpaper.jpg
 cp "$wall" ~/.mozilla/firefox/bgnqulea.default-release/chrome/wallpaper.jpg
 
 # магия с обоями
-matugen image ~/Images/paper/wallpaper.jpg
+matugen image ~/Images/paper/wallpaper.jpg --prefer darkness
 awww img --transition-type any --transition-duration 0.5 --transition-fps 165 "$wall"
 cwal --img "$wall"
 ~/bin/wal_telegram --background "$wall"
-hyprshade on brightness_contrast
 
 killall swaync
 notify-send "Wallpaper successfully set"

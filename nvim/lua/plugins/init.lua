@@ -12,10 +12,9 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
 		config = function()
-			require("nvim-treesitter").setup({
+			require("nvim-treesitter.config").setup({
 				ensure_installed = { "cpp", "c", "python", "svelte", "javascript", "typescript", "css", "html" },
 				highlight = { enable = true },
-				rainbow = { enable = true, extended_mode = true },
 			})
 		end,
 	},
@@ -113,7 +112,7 @@ return {
 	{
 		"nvim-telescope/telescope.nvim",
 		event = "VimEnter",
-		branch = "0.1.x",
+		branch = "master",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -154,20 +153,26 @@ return {
 	{
 		"catgoose/nvim-colorizer.lua",
 		config = function()
-			require("colorizer").setup(
-				{ "*" }, -- все файлы
-				{
-					RGB = true,
-					RRGGBB = true,
-					names = true,
-					RRGGBBAA = false,
-					rgb_fn = true,
-					hsl_fn = true,
-					css = true,
-					css_fn = true,
-					mode = "background",
-				}
-			)
+			require("colorizer").setup({
+				filetypes = { "*" }, -- все файлы
+
+				options = {
+					parsers = {
+						hex = { default = true }, -- RGB/RRGGBB и т.д.
+						names = {
+							enable = true,
+						},
+						rgb = { enable = true },
+						hsl = { enable = true },
+						css = true,
+						css_fn = true,
+					},
+
+					display = {
+						mode = "background",
+					},
+				},
+			})
 		end,
 	},
 }

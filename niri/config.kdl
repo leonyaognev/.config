@@ -1,0 +1,193 @@
+// --- NIRI CONFIG (HYPRLAND-LIKE SETUP) ---
+
+input {
+    keyboard {
+        xkb {
+            layout "us,ru"
+            options "grp:caps_toggle"
+        }
+        numlock
+    }
+
+    touchpad {
+        tap
+        natural-scroll
+
+        accel-speed 0.7
+    }
+
+    mouse {
+        accel-speed 0.7
+    }
+
+    focus-follows-mouse
+}
+
+layout {
+    gaps 25
+    background-color "transparent"
+    center-focused-column "never"
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+
+    default-column-width { 
+        proportion 0.8
+    }
+
+    focus-ring {
+        off
+    }
+
+    shadow {
+        softness 30
+        spread 5
+        offset x=0 y=5
+        color "#0007"
+    }
+}
+
+cursor {
+    xcursor-theme "Bibata-Modern-Classic"
+    xcursor-size 34
+    hide-when-typing
+}
+
+overview {
+    zoom 0.75
+}
+
+window-rule {
+    geometry-corner-radius 16
+    clip-to-geometry true
+}
+
+window-rule { 
+    match is-active=false
+    opacity 0.9
+}
+
+animations {
+    workspace-switch {
+        spring damping-ratio=0.78 stiffness=600 epsilon=0.0001
+    }
+
+    window-open {
+        spring damping-ratio=0.82 stiffness=500 epsilon=0.0001
+    }
+
+    window-close {
+        spring damping-ratio=0.88 stiffness=900 epsilon=0.0001
+    }
+
+    horizontal-view-movement {
+        spring damping-ratio=0.80 stiffness=550 epsilon=0.0001
+    }
+
+    window-movement {
+        spring damping-ratio=0.85 stiffness=650 epsilon=0.0001
+    }
+
+    window-resize {
+        spring damping-ratio=0.88 stiffness=700 epsilon=0.0001
+    }
+
+    config-notification-open-close {
+        spring damping-ratio=0.90 stiffness=800 epsilon=0.0001
+    }
+
+    screenshot-ui-open {
+        spring damping-ratio=0.85 stiffness=750 epsilon=0.0001
+    }
+}
+
+
+// --- AUTOSTART ---
+spawn-at-startup "awww-daemon"
+spawn-at-startup "eww daemon"
+spawn-sh-at-startup "eww open activate-linux"
+spawn-at-startup "swaync"
+spawn-at-startup "waybar"
+spawn-at-startup "wl-clip-persist --clipboard regular --display wayland-1"
+
+
+binds {
+    Alt+Tab { toggle-overview; }
+
+    // --- LAUNCH ---
+    Mod+Return { spawn "kitty"; }
+    Mod+D { spawn "rofi" "-show" "drun"; }
+    Mod+P { spawn "hyprpicker" "--autocopy"; }
+    Mod+S { spawn "swaync-client" "-t"; }
+    Mod+W { spawn "~/bin/wallpaper"; }
+
+    Mod+R {
+        spawn-sh "~/bin/wallpaper \"$(rofi -show files -modes \"files:~/bin/not_terminal_utils/rofi_wallpaper\" -show-icons -theme .config/rofi/config_wallpaper.rasi 2>&1)\"";
+    }
+
+    Super+Shift+T { spawn "Telegram"; }
+    Super+Shift+F { spawn "zen-browser"; }
+    Super+Shift+G { spawn "steam"; }
+    Super+Shift+M { spawn "kitty" "spotify_player"; }
+    Super+Shift+D { spawn "discord"; }
+    Super+Shift+P { spawn "pavucontrol"; }
+    Super+Shift+O { spawn "hyprlock"; }
+    Super+Shift+C { spawn "catgirldownloader"; }
+
+    // --- WINDOW ---
+    Mod+C { close-window; }
+    Mod+F { fullscreen-window; }
+    Mod+V { toggle-window-floating; }
+
+    // --- SCREENSHOTS ---
+    Print { spawn-sh "grim ~/screen-\"$(date +%s)\".png"; }
+    Mod+Print { spawn-sh "grim -g \"$(slurp)\" ~/Images/screenshots/screen-\"$(date +%s)\".png"; }
+    Super+Shift+S { spawn-sh "grim -g \"$(slurp)\" | swappy -f -"; }
+
+    // --- FOCUS ---
+    Mod+H { focus-column-left; }
+    Mod+L { focus-column-right; }
+    Mod+K { focus-window-up; }
+    Mod+J { focus-window-down; }
+
+    // --- WORKSPACES ---
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+0 { focus-workspace 10; }
+
+    Super+Shift+1 { move-column-to-workspace 1; }
+    Super+Shift+2 { move-column-to-workspace 2; }
+    Super+Shift+3 { move-column-to-workspace 3; }
+    Super+Shift+4 { move-column-to-workspace 4; }
+    Super+Shift+5 { move-column-to-workspace 5; }
+    Super+Shift+6 { move-column-to-workspace 6; }
+    Super+Shift+7 { move-column-to-workspace 7; }
+    Super+Shift+8 { move-column-to-workspace 8; }
+    Super+Shift+9 { move-column-to-workspace 9; }
+    Super+Shift+0 { move-column-to-workspace 10; }
+
+    // --- RESIZE ---
+    Mod+Ctrl+H { set-column-width "-20%"; }
+    Mod+Ctrl+L { set-column-width "+20%"; }
+    Mod+Ctrl+K { set-window-height "-20%"; }
+    Mod+Ctrl+J { set-window-height "+20%"; }
+
+    // --- EXTRA ---
+    Mod+Q { center-column; }
+    Mod+Ctrl+C { center-visible-columns; }
+
+    // --- SYSTEM ---
+    Mod+Ctrl+P { spawn "poweroff"; }
+    Mod+Ctrl+R { spawn "reboot"; }
+    Ctrl+Shift+Q { quit; }
+}
