@@ -4,7 +4,7 @@ input {
     keyboard {
         xkb {
             layout "us,ru"
-            options "grp:caps_toggle"
+            options "grp:win_space_toggle,caps:escape"
         }
         numlock
     }
@@ -35,7 +35,7 @@ layout {
     }
 
     default-column-width { 
-        proportion 0.8
+        proportion 1.0
     }
 
     focus-ring {

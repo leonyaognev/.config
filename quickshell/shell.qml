@@ -4,4 +4,5 @@ import "widgets" as Widgets
 
 ShellRoot {
      Widgets.AudioWidget {}
+     Widgets.ActivateLinux {}
 }

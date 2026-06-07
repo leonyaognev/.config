@@ -2,21 +2,17 @@
 	border-radius: 20px;
 	border: none;
 	font-family: JetBrainsMono-Bold, Symbols Nerd Font;
+	font-family: "JetBrainsMono Nerd Font";
 	font-weight: normal;
-	font-size: 13px;
+	font-size: 1rem;
 	padding: 0px 0px;
 	margin: 0px 5px;
 }
 
 @import url("/home/ognev/.cache/cwal/colors-waybar.css");
 
-@define-color bg #1a1a1a;
-@define-color fg #f0f0f0;
-@define-color gr #808080;
-@define-color red #ff6b6b;
-@define-color green #a0ffa0;
-@define-color blue #6b6bff;
 @define-color cyan #00d7d7;
+@define-color red #ff6b6b;
 
 window#waybar {
 	background-color: rgba(28, 28, 28, 0.5);
@@ -27,7 +23,6 @@ window#waybar {
 
 #workspaces button {
 	color: @color8;
-	background-color: @background40 ;
 	padding: 4px 0px;
 	margin: 0px 7px;
 }
@@ -45,29 +40,14 @@ window#waybar {
 }
 
 
-#cpu,
-#memory,
-#window,
-#custom-media,
-#custom-cmus,
-#custom-weather,
-#tray,
-#language,
-#pulseaudio,
-#temperature,
-#battery,
-#backlight,
-#cava,
 
 #clock {
 	padding: 0 10px;
 	margin: 0 6px;
 	color: @fg;
-	background-color: @background40 ;
 }
 
 #custom-menu {
-	background-color: @background40 ;
 	color: @cyan;
 	padding: 0px 10px;
 	margin: 0px 10px;
@@ -78,7 +58,6 @@ window#waybar {
 }
 
 #window {
-	background-color: @background40 ;
 	color: @cyan;
 	font-weight: bold;
 }
