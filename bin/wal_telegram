@@ -152,7 +152,7 @@ done
 
 # source this here in case wal is not an option
 if [[ "$mode" == 'wal' ]]; then
-  . "${XDG_CACHE_HOME:-${HOME}/.cache}/cwal/colors.sh"
+  . "${XDG_CACHE_HOME:-${HOME}/.cache}/wal_telegram/colors.sh"
 else
   . "$palette_file"
 fi

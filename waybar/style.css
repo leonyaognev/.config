@@ -9,8 +9,6 @@
 	margin: 0px 5px;
 }
 
-@import url("/home/ognev/.cache/cwal/colors-waybar.css");
-
 @define-color cyan #00d7d7;
 @define-color red #ff6b6b;
 

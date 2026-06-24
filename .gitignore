@@ -50,3 +50,11 @@
 !yazi/
 !yazi/**
 !.gitignore
+
+# matugen generated files
+rofi/colors.rasi
+cava/config
+swaync/themes/colors.css
+quickshell/widgets/Colors.qml
+kitty/colors.conf
+hypr/colors.lua

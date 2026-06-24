@@ -22,18 +22,20 @@ EOF
     wall=${files_array[$rand_index]}
 fi
 
-# сохраняем путь в файл
-echo "$wall" > "$cache_file"
+ext="${wall##*.}"
 
 # копирование для разных штук
-cp "$wall" ~/Images/paper/wallpaper.jpg
-cp "$wall" ~/.mozilla/firefox/bgnqulea.default-release/chrome/wallpaper.jpg
+rm -rf ~/Images/paper/*
+ln -sfn "$wall" ~/Images/paper/wallpaper.$ext
+ln -sfn "$wall" ~/Images/paper/wallpaper
+# cp "$wall" ~/.mozilla/firefox/bgnqulea.default-release/chrome/wallpaper.jpg
+killall swaync
 
 # магия с обоями
-matugen image ~/Images/paper/wallpaper.jpg --prefer darkness
+matugen image ~/Images/paper/wallpaper.$ext --prefer lightness
+killall -SIGUSR1 kitty
+hyprctl reload
 awww img --transition-type any --transition-duration 0.5 --transition-fps 165 "$wall"
-cwal --img "$wall"
-~/bin/wal_telegram --background "$wall"
+~/bin/wal_telegram --background "$wall" --palette ".cache/wal-telegram/colors.sh"
 
-killall swaync
 notify-send "Wallpaper successfully set"
