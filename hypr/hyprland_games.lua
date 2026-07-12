@@ -1,5 +1,4 @@
 require("modules.monitors")
-require("modules.autostart")
 require("modules.inputs")
 require("modules.gaps_bordder_colors")
 require("modules.animation")

@@ -1,3 +1,33 @@
 #!/bin/bash
 
-dbus-run-session start-hyprland
+show_help() {
+    cat <<EOF
+usage:
+    $(basename "$0") [option]
+
+option:
+    -h, --help           Show this message again
+    --default-mode       Start my default rise
+    --game-mode          Start in a minimal gaming profile (without UI-components)
+EOF
+}
+
+mode="default"
+
+for arg in "$@"; do
+    case "$arg" in
+        -h|--help) show_help
+            exit 0;;
+        --default-mode) mode="default";;
+        --game-mode) mode="game";;
+        *)
+            echo "Unknown: $arg"
+            echo "Use -h or --help for usage information"
+            exit 1;;
+    esac
+done
+
+case "$mode" in
+    default) start-hyprland;;
+    game) start-hyprland -- --config ~/.config/hypr/hyprland_games.lua;;
+esac

@@ -14,4 +14,6 @@
 git clone https://github.com/leonyaognev/.config.git ~/.config
 ln -s ~/.config/bin ~/bin
 ln -s ~/.config/Images ~/Images
+exec fish
+wallpaper
 ```
