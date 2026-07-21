@@ -11,6 +11,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("kitty", { workspace = "2" })
 	hl.exec_cmd("Telegram", { workspace = "3" })
 	hl.exec_cmd("kitty spotify_player", { workspace = "4" })
+	hl.exec_cmd("~/bin/hyprland-loop", { workspace = "4" })
 end)
 
 hl.config({

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+export SDL_VIDEODRIVER=wayland
+exec gamescope \
+    -e \
+    -f \
+    -O HDMI-A-1 \
+    --adaptive-sync \
+    -- steam -gamepadui

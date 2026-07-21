@@ -1,0 +1,118 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SELECTED_FILE="${XDG_RUNTIME_DIR:-/tmp}/wallpaper-picker/selected"
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+info()  { echo -e "${GREEN}[wp]${NC} $*"; }
+error() { echo -e "${RED}[wp]${NC} $*" >&2; }
+
+# ── IPC ──────────────────────────────────────────────────────────────────────
+ipc() {
+    quickshell ipc call wallpaper-picker "$1" 2>/dev/null
+}
+
+is_running() {
+    quickshell list >/dev/null 2>&1
+}
+
+# ── Commands ─────────────────────────────────────────────────────────────────
+cmd_ensure_shell() {
+    if ! is_running; then
+        error "Quickshell is not running"
+        exit 1
+    fi
+}
+
+cmd_pick() {
+    cmd_ensure_shell
+    setup_env
+    rm -f "$SELECTED_FILE"
+    generate_thumbs &
+
+    ipc showPicker
+
+    while is_running; do
+        if [ -f "$SELECTED_FILE" ]; then
+            path=$(cat "$SELECTED_FILE")
+            rm -f "$SELECTED_FILE"
+            if [ -n "$path" ]; then
+                "$path"
+            fi
+            ipc hidePicker
+            return
+        fi
+        sleep 0.2
+    done
+}
+
+cmd_show() {
+    cmd_ensure_shell
+    setup_env
+    generate_thumbs &
+    ipc showPicker
+}
+
+cmd_toggle() {
+    cmd_ensure_shell
+    ipc toggle
+}
+
+cmd_hide() {
+    is_running && ipc hidePicker
+}
+
+# ── Deps & env ───────────────────────────────────────────────────────────────
+setup_env() {
+    export WALLPAPER_DIR="${WALLPAPER_DIR:-$HOME/Images/wallpaper}"
+    export QS_CACHE_DIR="${QS_CACHE_DIR:-$HOME/.cache/wallpaper-picker}"
+    export QS_STATE_DIR="${QS_STATE_DIR:-$HOME/.local/state/wallpaper-picker}"
+    export QS_RUN_DIR="${QS_RUN_DIR:-${XDG_RUNTIME_DIR:-/tmp}/wallpaper-picker}"
+    export QS_LOG_DIR="${QS_LOG_DIR:-$QS_RUN_DIR/logs}"
+    mkdir -p "$QS_CACHE_DIR" "$QS_STATE_DIR" "$QS_RUN_DIR" "$QS_LOG_DIR"
+    export PATH="$PATH:/usr/bin:/usr/local/bin:/run/current-system/sw/bin"
+}
+
+generate_thumbs() {
+    local src_dir="$WALLPAPER_DIR"
+    local thumb_dir="$QS_CACHE_DIR/wallpaper_picker/thumbs"
+    local manifest="$thumb_dir/.manifest"
+    mkdir -p "$thumb_dir"
+    [ ! -d "$src_dir" ] && return
+
+    (
+        export MAGICK_THREAD_LIMIT=1
+        local src_list; src_list=$(mktemp)
+        find "$src_dir" -maxdepth 1 -type f \
+            \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \
+               -o -iname "*.gif" -o -iname "*.mp4" -o -iname "*.mkv" \
+               -o -iname "*.mov" -o -iname "*.webm" \) \
+            -printf "%f\n" | sort > "$src_list"
+        [ ! -f "$manifest" ] && touch "$manifest"
+
+        while IFS= read -r filename; do
+            img="$src_dir/$filename"
+            [ -f "$img" ] || continue
+            local ext="${filename##*.}"
+            if [[ "${ext,,}" == "webp" ]]; then
+                local new_img="${img%.*}.jpg"
+                magick "$img" "$new_img" 2>/dev/null && rm -f "$img"
+                img="$new_img"; filename="$(basename "$img")"; ext="jpg"
+            fi
+            if [[ "${ext,,}" =~ ^(mp4|mkv|mov|webm)$ ]]; then
+                [ ! -f "$thumb_dir/000_$filename" ] && \
+                    ffmpeg -y -ss 00:00:05 -i "$img" -vframes 1 -threads 1 -f image2 -q:v 2 "$thumb_dir/000_$filename" >/dev/null 2>&1
+            else
+                [ ! -f "$thumb_dir/$filename" ] && \
+                    magick "$img" -resize x420 -quality 70 "$thumb_dir/$filename" 2>/dev/null
+            fi
+        done < <(comm -23 "$src_list" <(sed 's/^000_//' "$manifest" | sort))
+        rm -f "$src_list"
+    ) </dev/null >/dev/null 2>&1 &
+}
+
+

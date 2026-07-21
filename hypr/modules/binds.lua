@@ -7,12 +7,7 @@ hl.bind(mainMod .. " + Q", hl.dsp.exec_cmd("hyprpicker --autocopy"))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("rofi -show drun"))
 hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("swaync-client -t"))
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("~/bin/wallpaper"))
-hl.bind(
-	mainMod .. " + R",
-	hl.dsp.exec_cmd(
-		'~/bin/wallpaper "$(rofi -show files -modes "files:~/bin/not_terminal_utils/rofi_wallpaper" -show-icons -theme .config/rofi/config_wallpaper.rasi 2>&1)"'
-	)
-)
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("wallpaper --pick"))
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("~/bin/wifimenu"))
 hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("Telegram"))
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.exec_cmd("zen-browser"))
@@ -28,6 +23,7 @@ hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("catgirldownloader"))
 
 ----- ХОТКЕИ -------------------------------------------------------------------
 hl.bind("CTRL + SHIFT + Q", hl.dsp.exit())
+hl.bind("CTRL + SHIFT + Q", hl.dsp.exec_cmd("killall hyprland-loop"))
 hl.bind(mainMod .. " + C", hl.dsp.window.close())
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind(mainMod .. " + T", hl.dsp.layout("togglesplit"))

@@ -1,41 +1,267 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-wall_dir="$HOME/Images/wallpaper/"
-cache_file="$HOME/.current_wall"
+set -Eeuo pipefail
 
-# если передан аргумент — используем его, иначе выбираем рандом
-if [ -n "$1" ] && [ -f "$1" ]; then
-    wall="$1"
-else
-    files=$(find "$wall_dir" -maxdepth 1 -type f)
-    [ -z "$files" ] && { echo "Файлов нет, дружище." ; exit 1; }
+# ╭──────────────────────────────────────────────╮
+# │ Wallpaper manager                            │
+# ╰──────────────────────────────────────────────╯
 
-    files_array=()
-    while IFS= read -r line; do
-      files_array+=("$line")
-    done <<EOF
-$files
-EOF
+readonly SCRIPT_NAME="wallpaper"
 
-    count=${#files_array[@]}
-    rand_index=$((RANDOM % count))
-    wall=${files_array[$rand_index]}
-fi
+readonly WALL_DIR="${HOME}/Images/wallpaper"
+readonly PAPER_DIR="${HOME}/Images/paper"
+readonly CACHE_FILE="${HOME}/.current_wall"
 
-ext="${wall##*.}"
+readonly SELECTED_FILE="${XDG_RUNTIME_DIR:-/tmp}/wallpaper-picker/selected"
 
-# копирование для разных штук
-rm -rf ~/Images/paper/*
-ln -sfn "$wall" ~/Images/paper/wallpaper.$ext
-ln -sfn "$wall" ~/Images/paper/wallpaper
-# cp "$wall" ~/.mozilla/firefox/bgnqulea.default-release/chrome/wallpaper.jpg
-killall swaync
 
-# магия с обоями
-matugen image ~/Images/paper/wallpaper.$ext --prefer lightness
-killall -SIGUSR1 kitty
-hyprctl reload
-awww img --transition-type any --transition-duration 0.5 --transition-fps 165 "$wall"
-~/bin/wal_telegram --background "$wall" --palette ".cache/wal-telegram/colors.sh"
+# ────────────────────────────────────────────────
+# Colors
+# ────────────────────────────────────────────────
 
-notify-send "Wallpaper successfully set"
+readonly GREEN="\033[0;32m"
+readonly RED="\033[0;31m"
+readonly RESET="\033[0m"
+
+
+log() {
+    printf "${GREEN}[${SCRIPT_NAME}]${RESET} %s\n" "$*"
+}
+
+die() {
+    printf "${RED}[${SCRIPT_NAME}]${RESET} %s\n" "$*" >&2
+    exit 1
+}
+
+
+# ────────────────────────────────────────────────
+# Environment
+# ────────────────────────────────────────────────
+
+setup_environment() {
+    export WALLPAPER_DIR="${WALLPAPER_DIR:-$WALL_DIR}"
+    export QS_CACHE_DIR="${QS_CACHE_DIR:-$HOME/.cache/wallpaper-picker}"
+    export QS_STATE_DIR="${QS_STATE_DIR:-$HOME/.local/state/wallpaper-picker}"
+    export QS_RUN_DIR="${QS_RUN_DIR:-${XDG_RUNTIME_DIR:-/tmp}/wallpaper-picker}"
+    export QS_LOG_DIR="${QS_LOG_DIR:-$QS_RUN_DIR/logs}"
+
+    mkdir -p \
+        "$QS_CACHE_DIR" \
+        "$QS_STATE_DIR" \
+        "$QS_RUN_DIR" \
+        "$QS_LOG_DIR"
+
+    export PATH="$PATH:/usr/bin:/usr/local/bin:/run/current-system/sw/bin"
+}
+
+
+# ────────────────────────────────────────────────
+# Quickshell IPC
+# ────────────────────────────────────────────────
+
+qs_running() {
+    quickshell list >/dev/null 2>&1
+}
+
+
+qs_call() {
+    quickshell ipc call wallpaper-picker "$1" 2>/dev/null
+}
+
+
+require_quickshell() {
+    qs_running || die "Quickshell is not running"
+}
+
+
+# ────────────────────────────────────────────────
+# Thumbnail generation
+# ────────────────────────────────────────────────
+
+generate_thumbnails() {
+    local source="$WALLPAPER_DIR"
+    local target="$QS_CACHE_DIR/wallpaper_picker/thumbs"
+
+    [[ -d "$source" ]] || return
+
+    mkdir -p "$target"
+
+    (
+        export MAGICK_THREAD_LIMIT=1
+
+        find "$source" \
+            -maxdepth 1 \
+            -type f \
+            > /tmp/wallpapers.list
+
+
+        while read -r image; do
+            local name
+            name="$(basename "$image")"
+
+            [[ -f "$target/$name" ]] && continue
+
+            case "${name,,}" in
+                *.mp4|*.mkv|*.mov|*.webm)
+                    ffmpeg \
+                        -y \
+                        -ss 5 \
+                        -i "$image" \
+                        -vframes 1 \
+                        -threads 1 \
+                        "$target/000_$name" \
+                        >/dev/null 2>&1
+                    ;;
+
+                *)
+                    magick \
+                        "$image" \
+                        -resize x420 \
+                        -quality 70 \
+                        "$target/$name" \
+                        2>/dev/null
+                    ;;
+            esac
+
+        done < /tmp/wallpapers.list
+
+    ) >/dev/null 2>&1 &
+}
+
+
+# ────────────────────────────────────────────────
+# Picker
+# ────────────────────────────────────────────────
+
+pick_wallpaper() {
+    require_quickshell
+    setup_environment
+
+    rm -f "$SELECTED_FILE"
+
+    generate_thumbnails
+
+    qs_call showPicker
+
+    while qs_running; do
+        if [[ -f "$SELECTED_FILE" ]]; then
+            wall="$(<"$SELECTED_FILE")"
+            rm -f "$SELECTED_FILE"
+
+            qs_call hidePicker
+            return
+        fi
+
+        sleep 0.2
+    done
+}
+
+
+# ────────────────────────────────────────────────
+# Random wallpaper
+# ────────────────────────────────────────────────
+
+random_wallpaper() {
+    mapfile -t wallpapers < <(
+        find "$WALL_DIR" \
+            -maxdepth 1 \
+            -type f
+    )
+
+    ((${#wallpapers[@]})) ||
+        die "No wallpapers found"
+
+    wall="${wallpapers[RANDOM % ${#wallpapers[@]}]}"
+}
+
+
+# ────────────────────────────────────────────────
+# Apply wallpaper
+# ────────────────────────────────────────────────
+
+apply_wallpaper() {
+    local extension="${wall##*.}"
+
+    mkdir -p "$PAPER_DIR"
+
+    rm -rf "${PAPER_DIR:?}"/*
+
+    ln -sfn \
+        "$wall" \
+        "$PAPER_DIR/wallpaper.$extension"
+
+    ln -sfn \
+        "$wall" \
+        "$PAPER_DIR/wallpaper"
+
+
+    killall swaync 2>/dev/null || true
+
+
+    matugen image \
+        "$PAPER_DIR/wallpaper.$extension" \
+        --prefer lightness
+
+
+    killall -SIGUSR1 kitty 2>/dev/null || true
+
+    hyprctl reload
+
+    awww img \
+        "$wall" \
+        --transition-type any \
+        --transition-duration 0.5 \
+        --transition-fps 165
+
+
+    "$HOME/bin/wal_telegram" \
+        --background "$wall" \
+        --palette "$HOME/.cache/wal-telegram/colors.sh"
+
+
+    notify-send \
+        "Wallpaper successfully set"
+}
+
+
+# ────────────────────────────────────────────────
+# Arguments
+# ────────────────────────────────────────────────
+main() {
+    local pick=false
+    local wall=""
+
+    while (($#)); do
+        case "$1" in
+            --pick)
+                pick=true
+                ;;
+
+            -*)
+                die "Unknown argument: $1"
+                ;;
+
+            *)
+                wall="$(realpath "$1")"
+                ;;
+        esac
+
+        shift
+    done
+
+    if "$pick"; then
+        pick_wallpaper
+
+    elif [[ -z "$wall" ]]; then
+        random_wallpaper
+
+    elif [[ ! -f "$wall" ]]; then
+        die "Wallpaper does not exist: $wall"
+    fi
+
+
+    apply_wallpaper
+}
+
+
+main "$@"
