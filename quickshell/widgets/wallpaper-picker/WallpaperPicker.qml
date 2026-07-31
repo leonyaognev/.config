@@ -5,6 +5,7 @@ import QtCore
 import Qt.labs.folderlistmodel
 import Quickshell
 import Quickshell.Io
+import ".."
 
 Item {
     id: window
@@ -19,7 +20,7 @@ Item {
 
     function s(val) { return scaler.s(val); }
 
-    MatugenColors { id: _theme }
+    Colors { id: _theme }
 
     signal wallpaperSelected(string path)
 
@@ -249,7 +250,8 @@ Item {
             }
         }
     }
-    Shortcut { sequence: "Escape"; onActivated: window.wallpaperSelected("") }
+    Shortcut { sequence: "escape"; onActivated: window.wallpaperSelected("") }
+    Shortcut { sequence: "q"; onActivated: window.wallpaperSelected("") }
     Shortcut { sequence: "Tab"; onActivated: window.cycleFilter(1) }
     Shortcut { sequence: "Backtab"; onActivated: window.cycleFilter(-1) }
 

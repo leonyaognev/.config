@@ -16,7 +16,7 @@ end)
 
 hl.config({
 	misc = {
-		vrr = true,
-		disable_splash_rendering = true,
+		vrr = false,
+		disable_splash_rendering = false,
 	},
 })

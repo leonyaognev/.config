@@ -24,13 +24,6 @@ hl.animation({
 	style = "slide",
 })
 hl.animation({
-	leaf = "layers",
-	enabled = true,
-	speed = 5,
-	bezier = "ease",
-	style = "gnomed",
-})
-hl.animation({
 	leaf = "fade",
 	enabled = true,
 	speed = 3,

@@ -1,17 +1,17 @@
 return {
 	active_border = {
 		colors = {
-			"#f0bf6d",
-			"#b5cea4",
+			"#e2c46d",
+			"#accfaf",
 		},
 		angle = 45,
 	},
 
-	inactive_border = "#9b8f80",
+	inactive_border = "#989080",
 
-	group_border = "#dbc3a1",
+	group_border = "#d4c5a1",
 
-	background = "#17130b",
+	background = "#16130b",
 
-	background_alt = "#241f17",
+	background_alt = "#231f17",
 }
