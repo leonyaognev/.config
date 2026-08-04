@@ -40,7 +40,6 @@ Item {
 
     readonly property var filterData: [
         { name: "All", hex: "", label: "All" },
-        { name: "Video", hex: "", label: "Vid" },
         { name: "Red", hex: "#FF4500", label: "" },
         { name: "Orange", hex: "#FFA500", label: "" },
         { name: "Yellow", hex: "#FFD700", label: "" },
@@ -64,7 +63,6 @@ Item {
         if (isLoading) return "Generating thumbnails...";
         if (window.visibleItemCount === 0) return "No wallpapers found";
         if (window.currentFilter === "All") return "";
-        if (window.currentFilter === "Video") return "Videos";
         return window.currentFilter;
     }
     property bool showNotification: currentNotification !== ""
@@ -104,9 +102,8 @@ Item {
         return "Monochrome";
     }
 
-    function checkItemMatchesFilter(fileName, isVid, filter) {
+    function checkItemMatchesFilter(fileName, filter) {
         if (filter === "All") return true;
-        if (filter === "Video") return isVid;
         let hexColor = window.colorMap[String(fileName)];
         if (!hexColor) return filter === "Monochrome";
         return window.getHexBucket(hexColor) === filter;
@@ -162,7 +159,7 @@ Item {
     FolderListModel {
         id: localFolderModel
         folder: window.thumbDir
-        nameFilters: ["*.jpg", "*.jpeg", "*.png", "*.webp", "*.gif", "*.mp4", "*.mkv", "*.mov", "*.webm"]
+        nameFilters: ["*.jpg", "*.jpeg", "*.png", "*.webp", "*.gif"]
         showDirs: false
         sortField: FolderListModel.Name
         onCountChanged: window.syncLocalModel()
@@ -198,8 +195,7 @@ Item {
         let count = 0;
         for (let i = 0; i < localProxyModel.count; i++) {
             let fname = localProxyModel.get(i).fileName || "";
-            let isVid = fname.startsWith("000_");
-            if (checkItemMatchesFilter(fname, isVid, window.currentFilter)) count++;
+            if (checkItemMatchesFilter(fname, window.currentFilter)) count++;
         }
         window.visibleItemCount = count;
     }
@@ -209,8 +205,7 @@ Item {
         let start = view.currentIndex;
         for (let i = start + direction; i >= 0 && i < localProxyModel.count; i += direction) {
             let fname = localProxyModel.get(i).fileName || "";
-            let isVid = fname.startsWith("000_");
-            if (checkItemMatchesFilter(fname, isVid, window.currentFilter)) {
+            if (checkItemMatchesFilter(fname, window.currentFilter)) {
                 view.currentIndex = i;
                 return;
             }
@@ -229,8 +224,7 @@ Item {
     }
 
     function getCleanName(name) {
-        if (!name) return "";
-        return String(name).startsWith("000_") ? String(name).substring(4) : String(name);
+        return String(name);
     }
 
     function selectWallpaper(safeFileName) {
@@ -308,8 +302,7 @@ Item {
             id: delegateRoot
             readonly property string safeFileName: fileName !== undefined ? String(fileName) : ""
             readonly property bool isCurrent: ListView.isCurrentItem
-            readonly property bool isVideo: safeFileName.startsWith("000_")
-            readonly property bool matchesFilter: window.checkItemMatchesFilter(safeFileName, isVideo, window.currentFilter)
+            readonly property bool matchesFilter: window.checkItemMatchesFilter(safeFileName, window.currentFilter)
             readonly property real targetWidth: isCurrent ? (window.itemWidth * 1.5) : (window.itemWidth * 0.5)
             readonly property real targetHeight: isCurrent ? (window.itemHeight + window.s(30)) : window.itemHeight
 
@@ -365,38 +358,6 @@ Item {
                         transform: Matrix4x4 {
                             property real s: -window.skewFactor
                             matrix: Qt.matrix4x4(1, s, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
-                        }
-                    }
-
-                    Rectangle {
-                        visible: delegateRoot.isVideo
-                        anchors.top: parent.top
-                        anchors.right: parent.right
-                        anchors.margins: window.s(10)
-                        width: window.s(32)
-                        height: window.s(32)
-                        radius: window.s(6)
-                        color: Qt.rgba(_theme.base.r, _theme.base.g, _theme.base.b, 0.6)
-                        transform: Matrix4x4 {
-                            property real s: -window.skewFactor
-                            matrix: Qt.matrix4x4(1, s, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
-                        }
-
-                        Canvas {
-                            anchors.fill: parent
-                            anchors.margins: window.s(8)
-                            onPaint: {
-                                var ctx = getContext("2d");
-                                var s = window.s;
-                                ctx.reset();
-                                ctx.fillStyle = Qt.rgba(_theme.text.r, _theme.text.g, _theme.text.b, 0.93);
-                                ctx.beginPath();
-                                ctx.moveTo(s(4), 0);
-                                ctx.lineTo(s(14), s(8));
-                                ctx.lineTo(s(4), s(16));
-                                ctx.closePath();
-                                ctx.fill();
-                            }
                         }
                     }
                 }
@@ -462,7 +423,7 @@ Item {
                 model: window.filterData
 
                 delegate: Item {
-                    width: !visible ? 0 : ((modelData.name === "Video" || modelData.name === "All") ? window.s(44) : (modelData.hex === "" ? filterText.contentWidth + window.s(24) : window.s(36)))
+                    width: !visible ? 0 : ((modelData.name === "All") ? window.s(44) : (modelData.hex === "" ? filterText.contentWidth + window.s(24) : window.s(36)))
                     height: !visible ? 0 : window.s(36)
                     anchors.verticalCenter: parent.verticalCenter
 
@@ -480,7 +441,7 @@ Item {
 
                         Text {
                             id: filterText
-                            visible: modelData.hex === "" && modelData.name !== "Video" && modelData.name !== "All"
+                            visible: modelData.hex === "" && modelData.name !== "All"
                             text: modelData.label
                             anchors.centerIn: parent
                             color: window.currentFilter === modelData.name ? _theme.text : Qt.rgba(_theme.text.r, _theme.text.g, _theme.text.b, 0.7)
@@ -488,25 +449,6 @@ Item {
                             font.pixelSize: window.s(14)
                             font.bold: window.currentFilter === modelData.name
                             Behavior on color { ColorAnimation { duration: 400; easing.type: Easing.OutQuart } }
-                        }
-
-                        Canvas {
-                            visible: modelData.name === "Video"
-                            width: window.s(14); height: window.s(16)
-                            anchors.centerIn: parent
-                            anchors.horizontalCenterOffset: window.s(2)
-                            onPaint: {
-                                var ctx = getContext("2d");
-                                var s = window.s;
-                                ctx.reset();
-                                ctx.fillStyle = window.currentFilter === modelData.name ? _theme.text : Qt.rgba(_theme.text.r, _theme.text.g, _theme.text.b, 0.7);
-                                ctx.beginPath();
-                                ctx.moveTo(0, 0);
-                                ctx.lineTo(s(14), s(8));
-                                ctx.lineTo(0, s(16));
-                                ctx.closePath();
-                                ctx.fill();
-                            }
                         }
 
                         Canvas {

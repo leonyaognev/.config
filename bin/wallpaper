@@ -207,9 +207,13 @@ apply_wallpaper() {
 
     hyprctl reload
 
+    transitions=(fade left right top bottom wipe wave grow center outer)
+
+    transition=${transitions[$RANDOM % ${#transitions[@]}]}
+
     awww img \
         "$wall" \
-        --transition-type any \
+        --transition-type "$transition" \
         --transition-duration 0.5 \
         --transition-fps 165
 

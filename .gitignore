@@ -59,3 +59,8 @@ quickshell/widgets/Colors.qml
 kitty/colors.conf
 hypr/modules/colors.lua
 Images/paper
+ranger/colorschemes/__pycache__/__init__.cpython-314.pyc
+ranger/colorschemes/__pycache__/default.cpython-314.pyc
+ranger/plugins/__pycache__/__init__.cpython-314.pyc
+ranger/plugins/ranger_devicons/__pycache__/__init__.cpython-314.pyc
+ranger/plugins/ranger_devicons/__pycache__/devicons.cpython-314.pyc
