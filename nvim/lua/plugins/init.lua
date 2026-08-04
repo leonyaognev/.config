@@ -190,6 +190,45 @@ return {
 				untracked = { text = "┆" },
 			},
 		},
+
+		keys = {
+			{
+				"]h",
+				function()
+					require("gitsigns").next_hunk()
+				end,
+				desc = "Next Git hunk",
+			},
+			{
+				"[h",
+				function()
+					require("gitsigns").prev_hunk()
+				end,
+				desc = "Previous Git hunk",
+			},
+
+			{
+				"<leader>hp",
+				function()
+					require("gitsigns").preview_hunk()
+				end,
+				desc = "Preview hunk",
+			},
+			{
+				"<leader>hr",
+				function()
+					require("gitsigns").reset_hunk()
+				end,
+				desc = "Reset hunk",
+			},
+			{
+				"<leader>hb",
+				function()
+					require("gitsigns").blame_line()
+				end,
+				desc = "Blame line",
+			},
+		},
 	},
 
 	{
@@ -211,6 +250,8 @@ return {
 			vim.keymap.set("n", "tg", builtin.live_grep)
 			vim.keymap.set("n", "tr", builtin.resume)
 			vim.keymap.set("n", "tb", builtin.buffers)
+			vim.keymap.set("n", "ts", builtin.lsp_document_symbols)
+			vim.keymap.set("n", "ti", builtin.lsp_incoming_calls)
 			vim.keymap.set("n", "<leader>/", function()
 				builtin.current_buffer_fuzzy_find(
 					require("telescope.themes").get_dropdown({ winblend = 10, previewer = false })
