@@ -10,7 +10,7 @@ hl.config({
 			active_border = colors.active_border,
 			inactive_border = colors.inactive_border,
 		},
-		layout = "dwindle",
+		layout = "master",
 	},
 	decoration = {
 		blur = {

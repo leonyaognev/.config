@@ -10,11 +10,21 @@ return {
 
 	{
 		"nvim-treesitter/nvim-treesitter",
-		run = ":TSUpdate",
+		lazy = false,
+		build = ":TSUpdate",
 		config = function()
-			require("nvim-treesitter.config").setup({
-				ensure_installed = { "cpp", "c", "python", "svelte", "javascript", "typescript", "css", "html" },
-				highlight = { enable = true },
+			require("nvim-treesitter").setup({
+				install_dir = vim.fn.stdpath("data") .. "/site",
+			})
+
+			require("nvim-treesitter").install({
+				"lua",
+				"vim",
+				"vimdoc",
+				"bash",
+				"c",
+				"cpp",
+				"python",
 			})
 		end,
 	},

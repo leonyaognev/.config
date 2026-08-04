@@ -21,6 +21,8 @@ hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("sh ~/bin/wifi"))
 hl.bind(mainMod .. " + SHIFT + O", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + SHIFT + C", hl.dsp.exec_cmd("catgirldownloader"))
 
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("remote-viewer -v ~/Downloads/console.vv"))
+
 ----- ХОТКЕИ -------------------------------------------------------------------
 hl.bind("CTRL + SHIFT + Q", hl.dsp.exit())
 hl.bind("CTRL + SHIFT + Q", hl.dsp.exec_cmd("killall hyprland-loop"))
