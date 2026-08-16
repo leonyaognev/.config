@@ -10,15 +10,14 @@ hl.config({
 			active_border = colors.active_border,
 			inactive_border = colors.inactive_border,
 		},
-		layout = "master",
+		layout = "dwindle",
 	},
 	decoration = {
 		blur = {
 			enabled = true,
-			size = 5,
-			passes = 2,
-			vibrancy = 0.4,
-			ignore_opacity = true,
+			size = 2,
+			passes = 1,
+			ignore_opacity = false,
 		},
 		rounding = 20,
 		shadow = {

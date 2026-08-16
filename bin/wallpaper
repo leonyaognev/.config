@@ -223,6 +223,7 @@ apply_wallpaper() {
         --palette "$HOME/.cache/wal-telegram/colors.sh"
 
 
+    echo penis
     notify-send \
         "Wallpaper successfully set"
 }

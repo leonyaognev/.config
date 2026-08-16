@@ -9,11 +9,13 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("wl-clip-persist --clipboard regular --display wayland-1")
 	hl.exec_cmd("zen-browser", { workspace = "1" })
 	hl.exec_cmd("kitty", { workspace = "2" })
+	hl.exec_cmd("Telegram", { workspace = "3" })
+	hl.exec_cmd("kitty spotify_player", { workspace = "4" })
 end)
 
 hl.config({
 	misc = {
-		vrr = false,
-		disable_splash_rendering = false,
+		vrr = true,
+		disable_splash_rendering = true,
 	},
 })

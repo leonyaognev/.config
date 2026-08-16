@@ -1,3 +1,51 @@
+local languages = {
+	"lua",
+	"bash",
+	"fish",
+	"printf",
+	"regex",
+	"c",
+	"cpp",
+	"cmake",
+	"rust",
+	"go",
+	"python",
+	"java",
+	"kotlin",
+	"javascript",
+	"typescript",
+	"tsx",
+	"html",
+	"css",
+	"scss",
+	"vue",
+	"c_sharp",
+	"sql",
+	"dockerfile",
+	"git_config",
+	"git_rebase",
+	"gitattributes",
+	"gitcommit",
+	"gitignore",
+	"make",
+	"ninja",
+	"json",
+	"json5",
+	"yaml",
+	"toml",
+	"xml",
+	"ini",
+	"markdown",
+	"markdown_inline",
+	"nix",
+	"hyprlang",
+	"gdscript",
+	"csv",
+	"diff",
+	"ssh_config",
+	"requirements",
+}
+
 return {
 	{
 		"stianlyng/neoranger.nvim",
@@ -10,95 +58,22 @@ return {
 
 	{
 		"nvim-treesitter/nvim-treesitter",
-		opts = function(_, opts)
-			opts.ensure_installed = {
-				"vim",
-				"vimdoc",
-				"query",
-				"luadoc",
-				"lua",
-				"bash",
-				"fish",
-				"printf",
-				"regex",
-				"c",
-				"cpp",
-				"cmake",
-				"rust",
-				"go",
-				"gomod",
-				"gowork",
-				"gosum",
-				"python",
-				"java",
-				"kotlin",
-				"javascript",
-				"typescript",
-				"tsx",
-				"html",
-				"css",
-				"scss",
-				"vue",
-				"svelte",
-				"php",
-				"ruby",
-				"zig",
-				"swift",
-				"dart",
-				"c_sharp",
-				"odin",
-				"haskell",
-				"ocaml",
-				"ocaml_interface",
-				"elixir",
-				"erlang",
-				"clojure",
-				"commonlisp",
-				"scheme",
-				"julia",
-				"r",
-				"sql",
-				"dockerfile",
-				"git_config",
-				"git_rebase",
-				"gitattributes",
-				"gitcommit",
-				"gitignore",
-				"make",
-				"ninja",
-				"json",
-				"json5",
-				"jsonc",
-				"yaml",
-				"toml",
-				"xml",
-				"ini",
-				"markdown",
-				"markdown_inline",
-				"terraform",
-				"hcl",
-				"helm",
-				"nix",
-				"hyprlang",
-				"gdscript",
-				"devicetree",
-				"graphql",
-				"proto",
-				"csv",
-				"diff",
-				"editorconfig",
-				"http",
-				"ssh_config",
-				"tmux",
-				"requirements",
-				"dtd",
-				"latex",
-				"bibtex",
-				"asm",
-				"comment",
-				"disassembly",
-			}
-			return opts
+		lazy = false,
+		build = ":TSUpdate",
+
+		config = function()
+			local ts = require("nvim-treesitter")
+
+			ts.setup({})
+
+			ts.install(languages)
+
+			vim.api.nvim_create_autocmd("FileType", {
+				pattern = languages,
+				callback = function()
+					vim.treesitter.start()
+				end,
+			})
 		end,
 	},
 
@@ -172,6 +147,8 @@ return {
 
 	{
 		"lewis6991/gitsigns.nvim",
+		event = { "BufReadPre", "BufNewFile" },
+
 		opts = {
 			signs = {
 				add = { text = "┃" },
@@ -195,14 +172,14 @@ return {
 			{
 				"]h",
 				function()
-					require("gitsigns").next_hunk()
+					require("gitsigns").nav_hunk("next")
 				end,
 				desc = "Next Git hunk",
 			},
 			{
 				"[h",
 				function()
-					require("gitsigns").prev_hunk()
+					require("gitsigns").nav_hunk("prev")
 				end,
 				desc = "Previous Git hunk",
 			},

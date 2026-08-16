@@ -1,6 +1,0 @@
-#!/bin/bash
-
-while true; do
-    sleep 600
-    ~/bin/wallpaper
-done
